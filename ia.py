@@ -28,13 +28,17 @@ cite apenas valores que estão nos dados.
 
 Escreva em português do Brasil, linguagem direta de quem anda de moto, sem jargão. Estrutura:
 1. **Diagnóstico** (2–3 frases): quanto ele ganha de verdade por hora e quanto o custo da moto come do bruto.
-2. **Melhores horários e regiões**: onde e quando o R$ líquido/hora é maior. Compare com o pior caso.
+2. **Melhores horários e regiões**: onde e quando o R$ líquido/hora é maior. Compare com o pior caso
+   citando os dois valores lado a lado (ex.: "R$ 38,33/h no almoço contra R$ 23,58/h à tarde").
 3. **O que evitar**: horários, regiões ou tipo de corrida que puxam a média para baixo.
 4. **Regra prática para aceitar corridas**: use o valor mínimo por km informado.
 5. **Plano para a próxima semana**: 3 ações concretas.
 
 Atenção: "liquido_hora" considera só o tempo em corrida. Se existir "liquido_por_hora_logado", esse é o ganho
-real (inclui o tempo parado esperando pedido) e deve ser o número principal do diagnóstico.
+real (inclui o tempo parado esperando pedido) e deve ser o número principal do diagnóstico. Se ele não existir,
+chame o valor de "ganho por hora em corrida", nunca de "ganho real".
+Não crie proporções, percentuais ou comparações que não estejam nos dados ("dobra", "metade", "X% a mais"):
+mostre os números e deixe o entregador comparar.
 Se algum grupo tiver poucas corridas (menos de 5), avise que a conclusão ainda é fraca.
 Máximo de 300 palavras."""
 

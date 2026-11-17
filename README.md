@@ -25,7 +25,8 @@ Eu sou entregador de moto em Brasília (iFood e 99) há 2 anos e construí o Cal
 
 - **O LLM não faz conta.** Toda a matemática fica em `calc.py`, de forma determinística e coberta por testes. A IA recebe só os números prontos (JSON) e é instruída a não inventar valores. Isso evita o erro clássico de LLM errando aritmética.
 - **Médias ponderadas.** R$/hora de um grupo é `soma do líquido ÷ soma das horas`, não a média das taxas de cada corrida — senão corridas curtas distorcem o resultado. Há um teste específico para isso.
-- **Funciona sem IA.** Sem chave de API (ou se a API falhar), o app gera as recomendações por regras. O usuário nunca fica sem resposta.
+- **Resiliente a falhas da API.** Se o Gemini estiver sobrecarregado ou demorar, o app tenta de novo com espera crescente e, se persistir, passa para modelos reserva mais leves. Chave inválida não é repetida. Cada chamada tem tempo limite, então a tela nunca fica travada.
+- **Funciona sem IA.** Sem chave de API (ou se todos os modelos falharem), o app gera as recomendações por regras e explica o motivo. O usuário nunca fica sem resposta.
 - **Feito para o mundo real.** Aceita `18,50`, `R$ 18,50`, datas `10/11/2026` ou `2026-11-10`, e explica quais linhas foram ignoradas e por quê.
 - **Sem banco de dados, por enquanto.** Os dados ficam na sessão do navegador e o usuário exporta o CSV. Foi uma escolha consciente para o MVP: zero custo e nenhum dado pessoal armazenado em servidor.
 
@@ -34,8 +35,9 @@ Eu sou entregador de moto em Brasília (iFood e 99) há 2 anos e construí o Cal
 ```
 app.py              interface (Streamlit)
 calc.py             regras de cálculo (puras e testáveis)
-ia.py               prompt + chamada ao Gemini + plano B por regras
+ia.py               prompt + chamada ao Gemini (com nova tentativa e modelos reserva) + plano B por regras
 tests/test_calc.py  testes das regras de cálculo
+tests/test_ia.py    testes da nova tentativa, dos modelos reserva e do plano B
 dados/corridas_exemplo.csv
 ```
 
@@ -51,7 +53,7 @@ streamlit run app.py
 
 Para ativar a IA, crie uma chave gratuita no [Google AI Studio](https://aistudio.google.com/apikey), copie `.streamlit/secrets.toml.example` para `.streamlit/secrets.toml` e cole a chave. Também dá para colar a chave direto na barra lateral do app.
 
-Testes: `pytest`
+Testes: `pytest` — 18 testes automatizados cobrindo as regras de cálculo e a camada de IA (sem chamar a API de verdade).
 
 ## Dados
 
