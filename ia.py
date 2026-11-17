@@ -73,7 +73,8 @@ def recomendacoes_llm(contexto: dict, api_key: str, modelo: str = MODELO_PADRAO)
     from google import genai
     from google.genai import types
 
-    client = genai.Client(api_key=api_key)
+    # limite de 60 s (em ms) para o app nunca ficar travado esperando a IA
+    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=60_000))
     resposta = client.models.generate_content(
         model=modelo,
         contents="Dados do entregador (JSON):\n" + json.dumps(contexto, ensure_ascii=False, default=str),
