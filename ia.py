@@ -73,12 +73,17 @@ def recomendacoes_llm(contexto: dict, api_key: str, modelo: str = MODELO_PADRAO)
     from google import genai
     from google.genai import types
 
-    # limite de 60 s (em ms) para o app nunca ficar travado esperando a IA
-    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=60_000))
+    # limite de 90 s (em ms) para o app nunca ficar travado esperando a IA
+    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=90_000))
     resposta = client.models.generate_content(
         model=modelo,
         contents="Dados do entregador (JSON):\n" + json.dumps(contexto, ensure_ascii=False, default=str),
-        config=types.GenerateContentConfig(system_instruction=INSTRUCOES, temperature=0.3),
+        config=types.GenerateContentConfig(
+            system_instruction=INSTRUCOES,
+            temperature=0.3,
+            # texto curto a partir de números prontos: raciocínio longo só deixa a resposta lenta
+            thinking_config=types.ThinkingConfig(thinking_level=types.ThinkingLevel.LOW),
+        ),
     )
     return resposta.text
 
