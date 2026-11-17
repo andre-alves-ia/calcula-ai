@@ -13,7 +13,7 @@ import pandas as pd
 
 from calc import CustosMoto
 
-MODELO_PADRAO = "gemini-2.5-flash"
+MODELO_PADRAO = "gemini-3.8-flash"
 
 INSTRUCOES = """Você é um consultor financeiro para entregadores de moto de aplicativo (iFood, 99 etc.) no Brasil.
 Você recebe métricas JÁ CALCULADAS das corridas reais de um entregador. Não refaça contas e não invente números:
