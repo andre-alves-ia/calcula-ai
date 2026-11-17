@@ -1,6 +1,6 @@
 # 🛵 Calcula AI — assistente de ganhos para entregadores
 
-**Demo:** [link do Streamlit Cloud]
+**Demo:** [calcula-ai.streamlit.app](https://calcula-ai.streamlit.app)
 
 Entregador de aplicativo vê o valor bruto de cada corrida, mas não sabe quanto **sobra de verdade** por hora e por km depois de pagar gasolina e manutenção da moto — nem quais horários e regiões compensam mais.
 
