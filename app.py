@@ -249,17 +249,20 @@ with aba_ia:
             st.caption("Dica: com menos de 20 corridas as conclusões ainda são fracas.")
         if st.button("Gerar recomendações", type="primary"):
             contexto = ia.montar_contexto(resumo, grupos, custos, meta_hora, minimo_km, horas_logado)
-            with st.spinner("Analisando suas corridas…"):
+            usado = None
+            with st.spinner("Analisando suas corridas… (pode levar até 1 minuto)"):
                 if chave:
                     try:
-                        texto = ia.recomendacoes_llm(contexto, chave, modelo)
+                        texto, usado = ia.recomendacoes_llm(contexto, chave, modelo)
                     except Exception as erro:  # API fora, chave inválida, cota etc.
                         detalhe = str(erro).replace(chave, "***")[:300]
                         st.warning(f"Não consegui falar com a IA ({type(erro).__name__}: {detalhe}). Usando regras.")
-                        texto = ia.recomendacoes_regras(contexto)
+                        texto = ia.recomendacoes_regras(contexto, ia_configurada=True)
                 else:
                     texto = ia.recomendacoes_regras(contexto)
             st.markdown(texto)
+            if usado:
+                st.caption(f"Gerado pela IA ({usado}) a partir dos números do painel.")
 
 # ---------- aba: avaliar oferta ----------
 with aba_oferta:
