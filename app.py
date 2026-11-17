@@ -254,7 +254,8 @@ with aba_ia:
                     try:
                         texto = ia.recomendacoes_llm(contexto, chave, modelo)
                     except Exception as erro:  # API fora, chave inválida, cota etc.
-                        st.warning(f"Não consegui falar com a IA ({type(erro).__name__}). Usando regras.")
+                        detalhe = str(erro).replace(chave, "***")[:300]
+                        st.warning(f"Não consegui falar com a IA ({type(erro).__name__}: {detalhe}). Usando regras.")
                         texto = ia.recomendacoes_regras(contexto)
                 else:
                     texto = ia.recomendacoes_regras(contexto)
